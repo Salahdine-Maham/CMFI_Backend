@@ -4,12 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.sd.cmfi.cmfi_backend.entities.stagiaires.Stagiaire;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Data
@@ -19,5 +18,9 @@ public class Session implements Serializable {
     private long id ;
     private String code_ses;
     private String lib_ses;
-    private String matricule_sta;
+    private Date date_debut;
+    private Date date_fin;
+
+
+
 }

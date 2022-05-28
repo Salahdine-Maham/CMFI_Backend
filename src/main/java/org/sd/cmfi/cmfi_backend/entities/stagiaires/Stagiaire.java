@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.sd.cmfi.cmfi_backend.entities.Session;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 
@@ -25,6 +23,10 @@ public class Stagiaire implements Serializable {
     private String adresse ;
     private String unite ;
     private long id_abs ;
+
+    @ManyToOne
+    @JoinColumn(name = "session_id")
+    private Session session;
 
 
 }

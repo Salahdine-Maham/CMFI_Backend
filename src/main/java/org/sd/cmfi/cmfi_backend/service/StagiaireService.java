@@ -3,7 +3,7 @@ package org.sd.cmfi.cmfi_backend.service;
 import org.sd.cmfi.cmfi_backend.dao.StagiaireRepository;
 import org.sd.cmfi.cmfi_backend.entities.stagiaires.Stagiaire;
 import org.sd.cmfi.cmfi_backend.entities.stagiaires.StagiaireNotFoundExeption;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -12,14 +12,23 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
+@RequestMapping("/api")
 public class StagiaireService {
 
-    @Autowired
-    private StagiaireRepository stagiaireRepository ;
+
+    private final  StagiaireRepository stagiaireRepository ;
 
 
-    // this methode is to gett the liste of Stagiaire all of them
+    public StagiaireService(StagiaireRepository stagiaireRepository) {
+        this.stagiaireRepository = stagiaireRepository;
+
+    }
+
+
+    // this methode is to get the liste of Stagiaire all of them
     @GetMapping(path = "/stagiaires")
     public List<Stagiaire> listeStagiaire() {
        return stagiaireRepository.findAll();
@@ -27,7 +36,7 @@ public class StagiaireService {
 
     // this methode to find one stagiaire by his id
     @GetMapping(path = "stagiaire/{id}")
-    public Optional<Stagiaire> findStagiaireById(@PathVariable long id ){
+    public Optional<Stagiaire> findStagiaireById(@PathVariable(value="id") long id ){
      Optional<Stagiaire> s = stagiaireRepository.findById(id);
 
      // we make a verification on the user if it's founded or not
@@ -36,6 +45,22 @@ public class StagiaireService {
 
         return s;
 
+    }
+
+    @PutMapping(path = "stagiaire/{id}")
+    public ResponseEntity<?> updateStagiaire( @RequestBody Stagiaire stagiaireDetail , @PathVariable(value= "id") Long id){
+        Optional<Stagiaire> stagiaire = stagiaireRepository.findById(id) ;
+        if ( !stagiaire.isPresent()){
+            return  ResponseEntity.notFound().build();
+        }
+        stagiaire.get().setAdresse(stagiaireDetail.getAdresse());
+        stagiaire.get().setEmail(stagiaireDetail.getEmail());
+        stagiaire.get().setGrade(stagiaireDetail.getGrade());
+        stagiaire.get().setMatricule(stagiaireDetail.getMatricule());
+        stagiaire.get().setNom(stagiaireDetail.getNom());
+        stagiaire.get().setUnite(stagiaireDetail.getUnite());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(stagiaireRepository.save(stagiaire.get()));
     }
 
 

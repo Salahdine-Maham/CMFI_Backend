@@ -7,13 +7,16 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Properties;
 
 
 @SpringBootApplication
 public class CmfiBackendApplication implements CommandLineRunner {
 
-    @Autowired
-    private StagiaireRepository stagiareRepository ;
+
+    private StagiaireRepository  stagiareRepository;
+
+
 
     public static void main(String[] args) {
         SpringApplication.run(CmfiBackendApplication.class, args);
@@ -21,12 +24,17 @@ public class CmfiBackendApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        stagiareRepository.save(new Stagiaire(1,"salah","cne","112360","sd@gmail.com","41721042","socogime","bcs",12) );
-        stagiareRepository.save(new Stagiaire(2,"houda","cne","112360","sd@gmail.com","41721042","socogime","bcs",12) );
-        stagiareRepository.save(new Stagiaire(3,"sehle","cne","112360","sd@gmail.com","41721042","socogime","bcs",12) );
+//        stagiareRepository.save(new Stagiaire(1,"salah","cne","112360","sd@gmail.com","41721042","socogime","bcs",12,null) );
 
-        stagiareRepository.findAll().forEach(stagiaire -> {
-            System.out.println(stagiaire.toString());
-        });
     }
+
+
+//        stagiareRepository.save(new Stagiaire(1,"salah","cne","112360","sd@gmail.com","41721042","socogime","bcs",12) );
+//        stagiareRepository.save(new Stagiaire(2,"houda","cne","112360","sd@gmail.com","41721042","socogime","bcs",12) );
+//        stagiareRepository.save(new Stagiaire(3,"sehle","cne","112360","sd@gmail.com","41721042","socogime","bcs",12) );
+//
+//        stagiareRepository.findAll().forEach(stagiaire -> {
+//            System.out.println(stagiaire.toString());
+//        });
+
 }
